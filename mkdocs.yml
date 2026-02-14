@@ -18,7 +18,7 @@ plugins:
           paths: ["yagap"]
 theme:
   name: material
-  feature:
+  features:
     tabs: true
   palette:
     - media: "(prefers-color-scheme: light)"

@@ -56,6 +56,24 @@ git push origin main
 You are now ready to start development on your project!
 The CI/CD pipeline will be triggered when you open a pull request, merge to main, or when you create a new release.
 
+## Documentation (MkDocs + GitHub Pages)
+
+### Local preview
+
+```bash
+uv sync
+uv run mkdocs serve
+```
+
+Then open <http://127.0.0.1:8000>.
+
+### Deploy to GitHub Pages
+
+1. Go to repository `Settings -> Pages`.
+2. Set `Source` to `GitHub Actions`.
+3. Push to `main` (or run workflow `docs` manually in `Actions`).
+4. Wait for workflow `docs` to pass, then visit <https://wh1isper.github.io/yagap/>.
+
 To finalize the set-up for publishing to PyPI, see [here](https://fpgmaas.github.io/cookiecutter-uv/features/publishing/#set-up-for-pypi).
 For activating the automatic documentation with MkDocs, see [here](https://fpgmaas.github.io/cookiecutter-uv/features/mkdocs/#enabling-the-documentation-on-github).
 To enable the code coverage reports, see [here](https://fpgmaas.github.io/cookiecutter-uv/features/codecov/).
