@@ -9,7 +9,7 @@
 Yet another agent platform
 
 - **Github repository**: <https://github.com/wh1isper/yagap/>
-- **Documentation** <https://wh1isper.github.io/yagap/>
+- **Documentation** <https://pages.wh1isper.top/>
 
 ## Getting started with your project
 
@@ -72,7 +72,7 @@ Then open <http://127.0.0.1:8000>.
 1. Go to repository `Settings -> Pages`.
 2. Set `Source` to `GitHub Actions`.
 3. Push to `main` (or run workflow `docs` manually in `Actions`).
-4. Wait for workflow `docs` to pass, then visit <https://wh1isper.github.io/yagap/>.
+4. Wait for workflow `docs` to pass, then visit <https://pages.wh1isper.top/>.
 
 To finalize the set-up for publishing to PyPI, see [here](https://fpgmaas.github.io/cookiecutter-uv/features/publishing/#set-up-for-pypi).
 For activating the automatic documentation with MkDocs, see [here](https://fpgmaas.github.io/cookiecutter-uv/features/mkdocs/#enabling-the-documentation-on-github).

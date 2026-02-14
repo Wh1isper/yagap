@@ -17,9 +17,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://wh1isper.github.io/yagap/"
+Homepage = "https://pages.wh1isper.top/"
 Repository = "https://github.com/wh1isper/yagap"
-Documentation = "https://wh1isper.github.io/yagap/"
+Documentation = "https://pages.wh1isper.top/"
 
 [dependency-groups]
 dev = [
