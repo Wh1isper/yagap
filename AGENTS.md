@@ -14,6 +14,7 @@
 - Keep documents concise and elegant; focus on high-level design only (architecture diagrams, flowcharts, swimlane diagrams, and pseudocode flows).
 - Create UML diagrams only when necessary.
 - Do not include code implementation details or code examples.
+- `docs/spec/index.md` is a manual index page for all spec documents; update it whenever adding/removing spec files.
 
 ## Workflow
 

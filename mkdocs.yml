@@ -7,16 +7,14 @@ edit_uri: edit/main/docs/
 repo_name: wh1isper/yagap
 copyright: Maintained by <a href="https://wh1isper.com">wh1isper</a>.
 
-nav:
-  - Home: index.md
-  - Modules: modules.md
-  - Mermaid Demo: mermaid.md
 plugins:
   - search
+  - awesome-pages
   - mkdocstrings:
       handlers:
         python:
           paths: ["yagap"]
+
 theme:
   name: material
   features:
