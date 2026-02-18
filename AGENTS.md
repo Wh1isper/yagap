@@ -16,6 +16,13 @@
 - Do not include code implementation details or code examples.
 - `docs/spec/index.md` is a manual index page for all spec documents; update it whenever adding/removing spec files.
 
+## Testing
+
+- Framework: pytest with pytest-asyncio
+- Style: **Function-based tests (no test classes)**, use fixtures for setup/teardown
+- Reusable fixtures: Extract to `conftest.py` (module-level or shared)
+- Config: pytest.ini (asyncio_mode=auto)
+
 ## Workflow
 
 - Before implementing any new feature or modification, review the relevant documents under `docs/spec/` first.

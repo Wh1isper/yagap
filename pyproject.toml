@@ -17,13 +17,22 @@ classifiers = [
 ]
 dependencies = [
     "ya-agent-sdk[all]==0.18.0",
-    "y-agent-environment==0.4.0"
+    "y-agent-environment==0.4.0",
+    "fastapi>=0.115.0",
+    "uvicorn>=0.34.0",
+    "sse-starlette>=2.1.3",
+    "pydantic>=2.10.0",
+    "pydantic-settings>=2.7.0",
+    "click>=8.1.7"
 ]
 
 [project.urls]
 Homepage = "https://yagap.wh1isper.top/"
 Repository = "https://github.com/wh1isper/yagap"
 Documentation = "https://yagap.wh1isper.top/"
+
+[project.scripts]
+yagap = "yagap.cli:main"
 
 [dependency-groups]
 dev = [
@@ -109,3 +118,6 @@ skip_empty = true
 [tool.coverage.run]
 branch = true
 source = ["yagap"]
+
+[tool.deptry]
+per_rule_ignores = {DEP002 = ["ya-agent-sdk", "y-agent-environment"]}

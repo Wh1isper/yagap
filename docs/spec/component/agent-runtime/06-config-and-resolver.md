@@ -4,12 +4,12 @@
 
 This document defines runtime-side configuration modules and resolver behavior.
 
-Runtime configuration is execution-focused. It does not resolve business presets or experiment strategies.
+Runtime configuration stays execution-focused, while supporting runtime preset selection for model/tool behavior.
 
 ## Design Principles
 
-- Runtime accepts gateway-provided runtime intent and override only
-- Runtime validates executable safety and compatibility
+- Runtime accepts gateway-provided runtime intent and override
+- Runtime supports runtime preset and model profile selection
 - Runtime merge order is deterministic and auditable
 - Runtime config remains decoupled from business policy semantics
 
@@ -17,7 +17,9 @@ Runtime configuration is execution-focused. It does not resolve business presets
 
 Runtime resolver input:
 
+- runtime default config
 - service runtime config
+- runtime preset reference (`preset_name`)
 - gateway runtime input
 - per-run runtime override
 
@@ -27,22 +29,29 @@ Runtime resolver output:
 
 Not in runtime resolver scope:
 
-- preset lookup
+- business preset lifecycle and governance
 - A/B or experiment decision
-- business policy conflict resolution
+- tenant/business authorization semantics
 
-## Resolver Architecture
+## Runtime Config Model
 
 ```mermaid
-flowchart LR
-    subgraph Input
+flowchart TB
+    subgraph Catalog
+        RP[Runtime Preset Registry]
+        MP[Model Profile Registry]
+    end
+
+    subgraph ResolverInput
         D[Runtime Default Config]
         S[Service Runtime Config]
+        P[preset_name]
         G[Gateway Runtime Input]
         O[Per-Run Runtime Override]
     end
 
     subgraph Resolver
+        L[Preset/Profile Loader]
         M[Merge Engine]
         V[Runtime Validator]
         A[SDK Adapter Input Builder]
@@ -53,18 +62,37 @@ flowchart LR
         K[SDK-ready Runtime Args]
     end
 
+    P --> L
+    RP --> L
+    MP --> L
+
     D --> M
     S --> M
     G --> M
     O --> M
+    L --> M
+
     M --> V --> R --> A --> K
 ```
 
-## Priority Order
+## Resolver Priority Order
 
 ```text
-Per-Run Runtime Override > Gateway Runtime Input > Service Runtime Config > Runtime Default Config
+Per-Run Runtime Override
+> Gateway Runtime Input
+> Runtime Preset
+> Service Runtime Config
+> Runtime Default Config
 ```
+
+## Runtime Preset and Model Profile
+
+- Runtime Preset is a named execution bundle
+- Runtime Preset references a Model Profile
+- Model Profile defines model-level executable settings
+- Gateway can choose `preset_name` and still apply per-run override
+
+This keeps model selection simple and stable, while preserving runtime-side validation.
 
 ## Runtime Config Domains
 
@@ -82,8 +110,9 @@ sequenceDiagram
     participant RT as agent-runtime
     participant RS as Runtime Resolver
 
-    GW->>RT: execute(..., runtime_input, runtime_override)
-    RT->>RS: merge(default, service, runtime_input, runtime_override)
+    GW->>RT: execute(..., preset_name, runtime_input, runtime_override)
+    RT->>RS: load preset/profile by preset_name
+    RT->>RS: merge(default, service, preset, runtime_input, runtime_override)
     RS->>RS: validate runtime constraints
     RS-->>RT: resolved_runtime_config
     RT->>RT: build SDK-ready runtime args
@@ -91,12 +120,12 @@ sequenceDiagram
 
 ## Validation Goals
 
-- ensure required runtime fields are present
+- ensure `preset_name` and model profile are valid
 - ensure toggle combinations are compatible
 - ensure runtime limits are inside service safety bounds
 
 ## Out of Scope
 
 - gateway-side config storage schema
-- preset and experiment lifecycle
-- tenant/business authorization semantics
+- business preset governance process
+- experiment platform integration
